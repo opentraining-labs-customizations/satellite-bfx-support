@@ -15,7 +15,7 @@
                 puma_worker: "{{ (answers_file.content | b64decode | from_yaml)['foreman']['foreman_service_puma_workers'] }}"
                 db_pool: "{{ (answers_file.content | b64decode | from_yaml)['foreman']['db_pool'] }}"
                 pulp_worker: "{{ (answers_file.content | b64decode | from_yaml)['foreman_proxy_content']['pulpcore_worker_count'] }}"
-         
+
        - name: Reading last_scenario
          slurp:
            path: /etc/foreman-installer/scenarios.d/last_scenario.yaml
@@ -32,7 +32,7 @@
        - name: Checking result
          ansible.builtin.debug:
               msg: Success. your alphanumeric code for completion is PERFORMANCE
-         when: 
+         when:
            - puma_thread_max == "16"
            - puma_thread_min == "16"
            - ( puma_worker | float >= 8 and puma_worker | float <= 12 )

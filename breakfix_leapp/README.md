@@ -1,14 +1,16 @@
-breakfix3/SCENARIO_TFTP
+breakfix0/SCENARIO_LEAPP
 =========
 
-This role breaks the satellite by adding incorrect param for tftp_dirs in satellite answers file.
+This role registers a RHEL8 client to satellite and simulates few problems while performing the LEAPP upgrade to RHEL9.
 
 What we essentially do by this ansible role is:
 
 * Confirm that the satellite is running
-* Enable tftp on satellite
-* Add an incorrect param for tftp_dirs.
-* Run satellite-installer
+* Create an activation key
+* Create and publish content view without the RHEL9 minor repos
+* Generate a registration command [ via Global registration method ] to register the client to satellite
+* Execute the command on the client and register it
+* Configure EPEL on client and install openssl rpms from it.
 
 
 Requirements
@@ -29,15 +31,15 @@ NA
 Example Playbook
 ----------------
 
-This ansible role can be executed after creating a playbook in the following way. 
+This ansible role can be executed after creating a playbook in the following way.
 
 ~~~
-# cat breakfix3.yaml
+# cat breakfix0.yaml
 ---
-- name: Deploy ansible role breakfix3 on target systems
+- name: Deploy ansible role breakfix_leapp on target systems
   hosts: satellite
   roles:
-    - role: breakfix3
+    - role: breakfix_leapp
       tags: break
 ~~~
 
@@ -49,4 +51,4 @@ It is free software licensed under the terms of the GNU General Public License G
 Author Information
 ------------------
 
-This role is developed by Soham Majumdar <smajumda@redhat.com>, <csedeepm@gmail.com>. 
+This role is developed by Soham Majumdar <smajumda@redhat.com>, <csedeepm@gmail.com>.

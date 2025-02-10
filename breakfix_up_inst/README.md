@@ -1,12 +1,15 @@
-breakfix2/SCENARIO_PERFORMANCE
+breakfix1/SCENARIO_UPGRADE
 =========
 
-This role breaks the satellite by setting some large values to few of the satellite params.
+This role simulates some problems while doing a satellite upgrade.
 
 What we essentially do by this ansible role is:
 
 * Confirm that the satellite is running
-* Set large values to puma max min threads, puma workers, foreman db pool, pulpcore workers
+* Change the IP in /etc/hosts
+* Replace hostname -f with shortname
+* Set incorrect tuning param in /etc/foreman-installer/scenarios.d/satellite.yaml
+* Create a repo file in /etc/yum.repos.d/ as the rh-cloud.repo.
 
 
 Requirements
@@ -27,15 +30,15 @@ NA
 Example Playbook
 ----------------
 
-This ansible role can be executed after creating a playbook in the following way. 
+This ansible role can be executed after creating a playbook in the following way.
 
 ~~~
-# cat breakfix2.yaml
+# cat breakfix1.yaml
 ---
-- name: Deploy ansible role breakfix2 on target systems
+- name: Deploy ansible role breakfix_up_inst on target systems
   hosts: satellite
   roles:
-    - role: breakfix2
+    - role: breakfix_up_inst
       tags: break
 ~~~
 
@@ -47,4 +50,4 @@ It is free software licensed under the terms of the GNU General Public License G
 Author Information
 ------------------
 
-This role is developed by Soham Majumdar <smajumda@redhat.com>, <csedeepm@gmail.com>. 
+This role is developed by Soham Majumdar <smajumda@redhat.com>, <csedeepm@gmail.com>.

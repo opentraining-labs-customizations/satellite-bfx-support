@@ -1,15 +1,14 @@
-breakfix1/SCENARIO_UPGRADE
+breakfix3/SCENARIO_TFTP
 =========
 
-This role simulates some problems while doing a satellite upgrade.
+This role breaks the satellite by adding incorrect param for tftp_dirs in satellite answers file.
 
 What we essentially do by this ansible role is:
 
 * Confirm that the satellite is running
-* Change the IP in /etc/hosts
-* Replace hostname -f with shortname
-* Set incorrect tuning param in /etc/foreman-installer/scenarios.d/satellite.yaml
-* Create a repo file in /etc/yum.repos.d/ as the rh-cloud.repo.
+* Enable tftp on satellite
+* Add an incorrect param for tftp_dirs.
+* Run satellite-installer
 
 
 Requirements
@@ -30,15 +29,15 @@ NA
 Example Playbook
 ----------------
 
-This ansible role can be executed after creating a playbook in the following way. 
+This ansible role can be executed after creating a playbook in the following way.
 
 ~~~
-# cat breakfix1.yaml
+# cat breakfix3.yaml
 ---
-- name: Deploy ansible role breakfix1 on target systems
+- name: Deploy ansible role breakfix_tftp_ans on target systems
   hosts: satellite
   roles:
-    - role: breakfix1
+    - role: breakfix_tftp_ans
       tags: break
 ~~~
 
@@ -50,4 +49,4 @@ It is free software licensed under the terms of the GNU General Public License G
 Author Information
 ------------------
 
-This role is developed by Soham Majumdar <smajumda@redhat.com>, <csedeepm@gmail.com>. 
+This role is developed by Soham Majumdar <smajumda@redhat.com>, <csedeepm@gmail.com>.

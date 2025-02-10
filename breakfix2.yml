@@ -1,0 +1,7 @@
+---
+- name: Deploy ansible role breakfix_perf on target systems
+  hosts: satellite
+  roles:
+    - role: breakfix_perf
+      tags: break
+

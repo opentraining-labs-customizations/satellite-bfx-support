@@ -6,7 +6,7 @@
 
 - name: Read credentials
   ansible.builtin.slurp:
-      path: /root/.hammer/cli.modules.d/foreman.yml  
+      path: /root/.hammer/cli.modules.d/foreman.yml
   register: slurp
 
 - name: Set credentials
