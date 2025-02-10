@@ -1,0 +1,7 @@
+---
+- name: Deploy ansible role breakfix_up_inst on target systems
+  hosts: satellite
+  roles:
+    - role: breakfix_up_inst
+      tags: break
+
