@@ -1,6 +1,7 @@
 ---
 - name: Deploy ansible role breakfix_tftp_ans on target systems
   hosts: satellite
+  become: True
   roles:
     - role: breakfix_tftp_ans
       tags: break

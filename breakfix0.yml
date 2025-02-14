@@ -1,6 +1,7 @@
 ---
 - name: Deploy ansible role breakfix_leapp on target systems
   hosts: satellite
+  become: True
   roles:
     - role: breakfix_leapp
       tags: break
