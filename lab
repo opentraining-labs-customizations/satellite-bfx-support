@@ -20,7 +20,7 @@ breaks() {
 }
 
 grade() {
-  ansible-playbook -i /opt/satellite-bfx-support/inventory /opt/satellite-bfx-support/$1.yml > /dev/null 2>&1
+  ansible-playbook -i /opt/satellite-bfx-support/inventory /opt/satellite-bfx-support/$1.yml
 }
 
 if [ "$#" -ne 2 ] || ! [[ "$2" =~ ^(breakfix0|breakfix1|breakfix2|breakfix3|grade0|grade1|grade2|grade3)$ ]]; then
