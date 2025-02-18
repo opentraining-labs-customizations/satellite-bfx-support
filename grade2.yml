@@ -1,6 +1,7 @@
 ---
 - name: Grading playbook for SCENARIO_PERFORMANCE
   hosts: satellite
+  become: True
   gather_facts: yes
   tasks:
        - name: Reading answers file using slurp

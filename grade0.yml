@@ -1,6 +1,7 @@
 ---
 - name: Grading playbook for SCENARIO_LEAPP
   hosts: rhel81
+  become: True
   tasks:
        - name: Detecting result
          ansible.builtin.debug:

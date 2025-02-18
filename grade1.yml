@@ -1,6 +1,7 @@
 ---
 - name: Grading playbook for SCENARIO_UPGRADE_INSTALLER
   hosts: satellite
+  become: True
   gather_facts: no
   tasks:
        - name: Extracting satellite_version
