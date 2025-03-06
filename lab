@@ -23,7 +23,7 @@ grade() {
   ansible-playbook -i /opt/satellite-bfx-support/inventory /opt/satellite-bfx-support/$1.yml
 }
 
-if [ "$#" -ne 2 ] || ! [[ "$2" =~ ^(breakfix0|breakfix1|breakfix2|breakfix3|grade0|grade1|grade2|grade3)$ ]]; then
+if [ "$#" -ne 2 ] || ! [[ "$2" =~ ^(breakfix0|breakfix1|breakfix2|breakfix3|breakfix4|grade0|grade1|grade2|grade3|grade4)$ ]]; then
   echo "Usage: $0 {break|grade} <breakfixN or gradeN>"
   exit 2
 fi
