@@ -1,0 +1,7 @@
+---
+- name: Deploy ansible role breakfix_httpd on target systems
+  hosts: satellite
+  become: True
+  roles:
+    - role: breakfix_httpd
+      tags: break

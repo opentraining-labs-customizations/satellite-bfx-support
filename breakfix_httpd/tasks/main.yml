@@ -1,0 +1,50 @@
+---
+# tasks file for breakfix_httpd
+- name: Set initial facts
+  ansible.builtin.set_fact:
+    satellite_hostname: "{{ ansible_fqdn }}"
+
+- name: Read credentials
+  slurp:
+      path: /root/.hammer/cli.modules.d/foreman.yml
+  register: slurp
+
+- name: Set credentials
+  set_fact:
+        password: "{{ (slurp.content | b64decode | from_yaml)[':foreman'][':password'] }}"
+        username: "{{ (slurp.content | b64decode | from_yaml)[':foreman'][':username'] }}"
+
+- name: Ensure satellite is running.
+  theforeman.foreman.status_info:
+    server_url: "https://{{ satellite_hostname }}"
+    username: "{{ username }}"
+    password: "{{ password }}"
+    validate_certs: false
+  register: status_info
+
+- name: Create a configuration file with security parameters
+  ansible.builtin.copy:
+    dest: /usr/share/crypto-policies/policies/FIP.pol
+    content: |
+      # Disable the AES-128 cipher, all modes 
+      cipher = -AES-128-* 
+      # Disable CHACHA20-POLY1305 for the TLS protocol (OpenSSL, GnuTLS, NSS, and OpenJDK) 
+      cipher@TLS = -CHACHA20-POLY1305 
+      # Allow using the FFDHE-1024 group with the SSH protocol (libssh and OpenSSH) 
+      group@SSH = FFDHE-1024+ 
+      # Disable all CBC mode ciphers for the SSH protocol (libssh and OpenSSH) 
+      cipher@SSH = -*-CBC # Allow the AES-256-CBC cipher in applications using libssh 
+      cipher@libssh = AES-256-CBC+
+      min_rsa_size = 3072 
+      hash = SHA2-384 SHA2-512 SHA3-384 SHA3-512 
+      hash = -SHA1
+      sign = -RSA-PSS-SHA1 -RSA-SHA1 -ECDSA-SHA1  
+    owner: root
+    group: root
+
+- name: Update crypto policy if needed
+  command: update-crypto-policies --set FIP
+
+- name: Reboot the system
+  ansible.builtin.reboot:
+    reboot_timeout: 600
